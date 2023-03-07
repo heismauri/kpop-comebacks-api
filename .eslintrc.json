@@ -1,0 +1,23 @@
+{
+  "env": {
+    "worker": true
+  },
+  "extends": "airbnb-base",
+  "globals": {
+    "cache": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "arrow-body-style": 0,
+    "comma-dangle": 0,
+    "no-console": 2,
+    "no-param-reassign": 0,
+    "no-restricted-globals": 0,
+    "no-unused-vars": 0,
+    "quote-props": [2, "consistent"],
+    "quotes": [2, "single"]
+  }
+}
