@@ -78,8 +78,8 @@ const getAllReleasesUpstream = async () => {
 const getAllReleases = async () => {
   const KVCache = await cache.getWithMetadata('releases');
   let { value: releases } = KVCache;
-  const { metadata } = KVCache;
-  if (releases === null || new Date() > new Date(metadata.date)) {
+  const { metadata: { date } } = KVCache;
+  if (releases === null || new Date() > new Date(date)) {
     releases = await getAllReleasesUpstream();
   } else {
     releases = JSON.parse(releases);
