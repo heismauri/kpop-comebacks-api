@@ -1,4 +1,5 @@
 const timestampsElements = document.querySelectorAll('.calendar-day-date');
+const checkbox = document.getElementById('toggle-time');
 
 const addLeadingZero = (number) => {
   return `0${number}`.slice(-2);
@@ -26,17 +27,31 @@ const formatDate = (date, is24Hours) => {
   return [`${day}.${month}.${date.getFullYear()}`, time];
 };
 
-const timestampConverter = (is24Hours) => {
+const timestampConverter = (is24Hours = false) => {
   timestampsElements.forEach((element) => {
     const { timestamp } = element.dataset;
+    console.log(timestamp);
     const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
     element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
   });
 };
 
-timestampConverter(false);
+const get24HrsCookie = () => {
+  const name = 'is24Hours=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  return decodedCookie.split(name)[1];
+};
 
-const checkbox = document.getElementById('toggle-time');
+let cookie24Hrs = get24HrsCookie();
+if (!cookie24Hrs) {
+  timestampConverter();
+} else {
+  cookie24Hrs = cookie24Hrs === 'true';
+  checkbox.checked = cookie24Hrs;
+  timestampConverter(cookie24Hrs);
+}
+
 checkbox.addEventListener('change', (event) => {
   timestampConverter(event.currentTarget.checked);
+  document.cookie = `is24Hours=${event.currentTarget.checked}`;
 });
