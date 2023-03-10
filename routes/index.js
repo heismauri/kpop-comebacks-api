@@ -6,7 +6,7 @@ import mainJS from '../static/main.js.txt';
 
 const releasesToHTML = (releases) => {
   return Object.keys(releases).map((day) => {
-    const title = `<ul class="calendar-day"><li class="calendar-day-date">${day}</li>`;
+    const title = `<ul class="calendar-day"><li class="calendar-day-date" data-timestamp="${day}"></li>`;
     const listElements = releases[day].map((release) => {
       return `<li>${encode(release)}</li>`;
     });
@@ -41,15 +41,14 @@ const buildHTML = async () => {
     <body>
       <div class="container">
         <h1>🫰 KPop Upcoming Releases</h1>
-        <label class="switch">
-          <span class="toggle-label">24 HRS</span>
-          <input type="checkbox">
-          <span class="slider round"></span>
+        <label class="toggle-time">
+          <span class="toggle-time__label">24 HRS</span>
+          <input class="toggle-time__input" id="toggle-time" type="checkbox">
         </label>
         ${releasesToHTML(allReleases)}
-        <script>${mainJS}</script>
         <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
+      <script>${mainJS}</script>
     </body>
   </html>
   `;

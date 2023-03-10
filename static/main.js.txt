@@ -1,3 +1,5 @@
+const timestampsElements = document.querySelectorAll('.calendar-day-date');
+
 const addLeadingZero = (number) => {
   return `0${number}`.slice(-2);
 };
@@ -17,14 +19,24 @@ const formatTime = (date) => {
   return `${hours}:${minutes}`;
 };
 
-const formatDate = (date) => {
+const formatDate = (date, is24Hours) => {
   const day = addLeadingZero(date.getDate());
   const month = addLeadingZero(date.getMonth() + 1);
-  return [`${day}.${month}.${date.getFullYear()}`, formatAMPM(date)];
+  const time = is24Hours ? formatTime(date) : formatAMPM(date);
+  return [`${day}.${month}.${date.getFullYear()}`, time];
 };
 
-const timestamps = document.querySelectorAll('.calendar-day-date');
-timestamps.forEach((timestamp) => {
-  const [date, time] = formatDate(new Date(parseInt(timestamp.innerText, 10)));
-  timestamp.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
+const timestampConverter = (is24Hours) => {
+  timestampsElements.forEach((element) => {
+    const { timestamp } = element.dataset;
+    const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
+    element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
+  });
+};
+
+timestampConverter(false);
+
+const checkbox = document.getElementById('toggle-time');
+checkbox.addEventListener('change', (event) => {
+  timestampConverter(event.currentTarget.checked);
 });
