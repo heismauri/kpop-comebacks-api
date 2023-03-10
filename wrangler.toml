@@ -10,3 +10,6 @@ rules = [
   { type = "Text", globs = ["**/**.txt"], fallthrough = true },
   { type = "Text", globs = ["**/*.css"], fallthrough = true },
 ]
+
+[triggers]
+crons = ["10 9 * * *"]
