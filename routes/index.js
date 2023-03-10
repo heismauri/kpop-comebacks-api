@@ -1,6 +1,8 @@
 import { encode } from 'he';
 
 import { getAllReleases } from './api';
+import style from '../static/style.css';
+import script from '../static/main.js.txt';
 
 const releasesToHTML = (releases) => {
   return Object.keys(releases).map((day) => {
@@ -39,37 +41,15 @@ const buildHTML = async () => {
     <body>
       <div class="container">
         <h1>🫰 KPop Upcoming Releases</h1>
+        <label class="switch">
+          <span class="toggle-label">24 HRS</span>
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
         ${releasesToHTML(allReleases)}
+        <script>${script}</script>
         <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
-      <script>
-        const addLeadingZero = (number) => {
-          return \`0\${number}\`.slice(-2);
-        };
-        const formatAMPM = (date) => {
-          let hours = date.getHours();
-          const minutes = addLeadingZero(date.getMinutes());
-          const ampm = hours >= 12 ? 'PM' : 'AM';
-          hours = (hours %= 12) || 12;
-          hours = addLeadingZero(hours);
-          return \`\${hours}:\${minutes}\${ampm}\`;
-        };
-        const formatTime = (date) => {
-          const hours = addLeadingZero(date.getHours());
-          const minutes = addLeadingZero(date.getMinutes());
-          return \`\${hours}:\${minutes}\`;
-        };
-        const formatDate = (date) => {
-          const day = addLeadingZero(date.getDate());
-          const month = addLeadingZero(date.getMonth() + 1);
-          return [\`\${day}.\${month}.\${date.getFullYear()}\`, formatAMPM(date)];
-        };
-        const timestamps = document.querySelectorAll('.calendar-day-date');
-        timestamps.forEach((timestamp) => {
-          const [date, time] = formatDate(new Date(parseInt(timestamp.innerText, 10)));
-          timestamp.innerHTML = \`<strong>\${date}</strong><i>\${time}</i>\`;
-        });
-      </script>
     </body>
   </html>
   `;
