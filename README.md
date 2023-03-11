@@ -22,7 +22,6 @@ The path `/api` displays the latest updates with a timestamp to convert on the u
     "title": "NMIXX - expérgo"
   }
 ]
-
 ```
 
 ## Information
