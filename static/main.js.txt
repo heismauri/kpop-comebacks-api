@@ -30,7 +30,6 @@ const formatDate = (date, is24Hours) => {
 const timestampConverter = (is24Hours = false) => {
   timestampsElements.forEach((element) => {
     const { timestamp } = element.dataset;
-    console.log(timestamp);
     const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
     element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
   });
