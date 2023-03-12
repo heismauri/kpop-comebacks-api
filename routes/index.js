@@ -27,7 +27,7 @@ const buildHTML = async () => {
   const allReleases = groupByDate(await getAllReleases());
   const page = `
   <!DOCTYPE html>
-  <html>
+  <html lang="en">
     <head>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,10 +41,12 @@ const buildHTML = async () => {
     <body>
       <div class="container">
         <h1>🫰 KPop Upcoming Releases</h1>
-        <label class="toggle-time">
-          <span class="toggle-time__label">24 HRS</span>
-          <input class="toggle-time__input" id="toggle-time" type="checkbox">
-        </label>
+        <div class="toggle-time__wrapper">
+          <label class="toggle-time">
+            <span class="toggle-time__label">24 HRS</span>
+            <input class="toggle-time__input" id="toggle-time" type="checkbox">
+          </label>
+        </div>
         ${releasesToHTML(allReleases)}
         <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
