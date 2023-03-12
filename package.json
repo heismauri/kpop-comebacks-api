@@ -1,7 +1,7 @@
 {
   "name": "kpop-releases-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.1.0",
+  "description": "API which displays the latest updates with a timestamp to convert on the users' local time",
   "main": "worker.js",
   "type": "module",
   "author": "heismauri",
