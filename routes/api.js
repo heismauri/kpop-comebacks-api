@@ -58,10 +58,6 @@ const getReleases = async (date) => {
     .sort((a, b) => a.date - b.date);
 };
 
-const metadataMaker = (releases) => {
-  return [...new Set(releases.map((release) => release.date))][1];
-};
-
 const getAllReleasesUpstream = async () => {
   const currentDate = new Date();
   const currentMonth = dateForURL(currentDate);
@@ -70,7 +66,7 @@ const getAllReleasesUpstream = async () => {
   const nextMonthReleases = await getReleases(nextMonth);
   const allReleases = [...currentMonthReleases, ...nextMonthReleases];
   await cache.put('releases', JSON.stringify(allReleases), {
-    metadata: { date: metadataMaker(allReleases) },
+    metadata: { date: allReleases[0].date },
   });
   return allReleases;
 };
@@ -84,7 +80,7 @@ const getAllReleases = async () => {
   } else {
     releases = JSON.parse(releases);
   }
-  return releases.filter((release) => new Date(release.date) > new Date());
+  return releases;
 };
 
 const handleRequest = async () => {
