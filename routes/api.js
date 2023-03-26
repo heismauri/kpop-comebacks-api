@@ -35,7 +35,8 @@ const formatReleases = (releases) => {
 };
 
 const getReleases = async (date) => {
-  const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${date}.json`)
+  const formattedDate = dateForURL(date);
+  const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`)
     .then((response) => response.json());
   const releasesTable = json.data.content_md
     .split(/\|Day\|Time\|Artist\|Album Title\|Album Type\|Title Track\|Streaming(\r\n|\n)\|--\|--\|--\|--\|--\|--\|--(\r\n|\n)/)[3]
@@ -46,7 +47,7 @@ const getReleases = async (date) => {
   const unformattedReleases = allReleases.map((release) => {
     const [, ordinalDay, time, artist, detail] = release.split('|');
     const day = (ordinalDay !== '') ? /\d+/.exec(ordinalDay) : '';
-    const [year, month] = date.split('/');
+    const [year, month] = formattedDate.split('/');
     let title = (detail === '') ? artist : `${artist} - ${detail}`;
     title = decode(title);
     return {
@@ -60,10 +61,8 @@ const getReleases = async (date) => {
 
 const getAllReleasesUpstream = async () => {
   const currentDate = new Date();
-  const currentMonth = dateForURL(currentDate);
-  const nextMonth = dateForURL(getNextMonth(currentDate));
-  const currentMonthReleases = await getReleases(currentMonth);
-  const nextMonthReleases = await getReleases(nextMonth);
+  const currentMonthReleases = await getReleases(currentDate);
+  const nextMonthReleases = await getReleases(getNextMonth(currentDate));
   const allReleases = [...currentMonthReleases, ...nextMonthReleases];
   await cache.put('releases', JSON.stringify(allReleases), {
     metadata: { date: allReleases[0].date },
