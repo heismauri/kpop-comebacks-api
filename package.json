@@ -9,7 +9,7 @@
     "eslint": "8.35.0",
     "eslint-config-airbnb-base": "15.0.0",
     "eslint-plugin-import": "2.27.5",
-    "wrangler": "2.12.2"
+    "wrangler": "latest"
   },
   "dependencies": {
     "he": "1.2.0",
