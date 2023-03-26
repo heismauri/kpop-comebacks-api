@@ -1,8 +1,8 @@
 import { encode } from 'he';
 
 import { getAllReleases } from './api';
-import styleCSS from '../static/style.css';
-import mainJS from '../static/main.js.txt';
+import styleCSS from '../public/style.css';
+import mainJS from '../public/main.js.txt';
 
 const releasesToHTML = (releases) => {
   return Object.keys(releases).map((day) => {
