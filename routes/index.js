@@ -33,7 +33,7 @@ const buildHTML = async () => {
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>KPop Upcoming Releases - heismauri</title>
       <meta name="description" content="Your go-to source for Kpop fans looking for accurate and up-to-date information on upcoming releases of KPop. Our site displays the date on your local time making it easy for you to not get confused about time zones">
-      <link rel="shortcut icon" href="https://i.imgur.com/KSa8gdM.png">
+      <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫰</text></svg>">
       <style>
         ${styleCSS}
       </style>
