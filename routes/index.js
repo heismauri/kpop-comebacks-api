@@ -50,6 +50,9 @@ const buildHTML = async () => {
           </div>
         </header>
         <main>${releasesToHTML(allReleases)}</main>
+        <hr>
+          Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.
+        <hr>
         <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
       <script>${mainJS}</script>
