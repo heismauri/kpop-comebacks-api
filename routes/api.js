@@ -19,41 +19,46 @@ const getNextMonth = (date) => {
 };
 
 const timestampMaker = (release) => {
-  return new Date(`${release.year} ${release.month} ${release.day} ${release.time} GMT+9`).getTime();
+  return new Date(`${release.year} ${release.month} ${release.day} ${release.time} GMT+9`);
 };
 
 const formatReleases = (releases) => {
+  const currentDay = new Date();
   return releases.map((release, index) => {
     if (release.day === '') release.day = releases[index - 1].day;
     if (release.time === '') release.time = releases[index - 1].time;
-    const date = timestampMaker(release);
+    let date = timestampMaker(release);
+    if (currentDay > date) return false;
+    date = date.getTime();
     return {
       date,
       title: release.title
     };
-  }).filter((release) => new Date(release.date) > new Date());
+  }).filter((release) => release);
 };
 
 const getReleases = async (date) => {
   const formattedDate = dateForURL(date);
   const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`)
     .then((response) => response.json());
-  const releasesTable = json.data.content_md
+  const allReleases = json.data.content_md
     .split(/\|Day\|Time\|Artist\|Album Title\|Album Type\|Title Track\|Streaming(\r\n|\n)\|--\|--\|--\|--\|--\|--\|--(\r\n|\n)/)[3]
-    .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0];
-  const allReleases = releasesTable
-    .replaceAll(/\*\|\*|\*\||\|\*/g, '|')
+    .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
     .split(/\r\n|\n/);
   const unformattedReleases = allReleases.map((release) => {
-    const [, ordinalDay, time, artist, detail] = release.split('|');
-    const day = (ordinalDay !== '') ? /\d+/.exec(ordinalDay) : '';
+    // eslint-disable-next-line prefer-const
+    let [, day, time, artist, detail] = release.split('|');
+    if (time === '?') return false;
+    artist = artist.replace(/^\*|\*$/g, '');
+    detail = detail.replace(/^\*|\*$/g, '');
+    if (day !== '') day = /\d+/.exec(day);
     const [year, month] = formattedDate.split('/');
     let title = (detail === '') ? artist : `${artist} - ${detail}`;
     title = decode(title);
     return {
       year, month, day, time, title
     };
-  }).filter((release) => release.time !== '?');
+  }).filter((release) => release);
   return formatReleases(unformattedReleases)
     .sort((a, b) => a.title.localeCompare(b.title))
     .sort((a, b) => a.date - b.date);
