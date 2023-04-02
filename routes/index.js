@@ -40,14 +40,16 @@ const buildHTML = async () => {
     </head>
     <body>
       <div class="container">
-        <h1>🫰 KPop Upcoming Releases</h1>
-        <div class="toggle-time__wrapper">
-          <label class="toggle-time">
-            <span class="toggle-time__label">24 HRS</span>
-            <input class="toggle-time__input" id="toggle-time" type="checkbox">
-          </label>
-        </div>
-        ${releasesToHTML(allReleases)}
+        <header>
+          <h1>🫰 KPop Upcoming Releases</h1>
+          <div class="toggle-time__wrapper">
+            <label class="toggle-time">
+              <span class="toggle-time__label">24 HRS</span>
+              <input class="toggle-time__input" id="toggle-time" type="checkbox">
+            </label>
+          </div>
+        </header>
+        <main>${releasesToHTML(allReleases)}</main>
         <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
       <script>${mainJS}</script>

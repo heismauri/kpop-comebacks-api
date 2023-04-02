@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
 :root {
   --primary-color: #ce5891;
 }
@@ -10,16 +12,38 @@ body {
   margin: 0;
   color: #3c4142;
   font-size: 1rem;
-  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
 }
 
 a {
   text-decoration: none;
+  transition: all 0.4s ease-in-out;
+}
+
+hr {
+  margin: 1rem 0;
+  color: inherit;
+  border: 0;
+  border-top: 1px solid;
+  opacity: .25;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
 
 .text-right {
   text-align: right;
+}
+
+.toggle-time__wrapper {
+  width: max-content;
+  background-color: rgb(206 88 145 / 10%);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .toggle-time {
@@ -63,15 +87,17 @@ a {
 .container {
   width: 95%;
   max-width: 30rem;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   margin: 0 auto;
 }
 
 h1 {
+  font-weight: bold;
+  font-size: 1.75rem;
   color: var(--primary-color);
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: 1.5rem;
+  margin: 0;
+  margin-bottom: 0.5rem;
 }
 
 .calendar-day {
@@ -90,19 +116,27 @@ h1 {
   opacity: 0.5;
 }
 
-@media (prefers-color-scheme: dark) {
-  body {
-    background: #201c1c;
-    color: #fff;
-  }
+a img {
+  transition: all 0.4s ease-in-out;
+}
+
+a:hover img {
+  opacity: 0.6;
 }
 
 footer {
-  padding: 0.5rem 0;
   text-align: center;
+  margin: 0.5rem 0;
 }
 
 footer a {
   color: inherit;
   opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #201c1c;
+    color: #fff;
+  }
 }
