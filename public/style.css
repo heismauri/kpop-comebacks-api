@@ -55,6 +55,8 @@ img {
 .toggle-time {
   display: flex;
   align-items: center;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .toggle-time__label {
