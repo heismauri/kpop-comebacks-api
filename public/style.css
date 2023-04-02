@@ -96,6 +96,7 @@ img {
   width: 95%;
   max-width: 30rem;
   padding: 1rem 1.5rem;
+  padding-bottom: 0;
   margin: 0 auto;
 }
 
@@ -133,13 +134,33 @@ a:hover img {
 }
 
 footer {
-  text-align: center;
-  margin: 0.5rem 0;
+  padding: 1rem;
+  padding-top: 0;
 }
 
-footer a {
-  color: inherit;
+footer ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+footer ul li {
+  padding: 0.5rem 1rem;
+}
+
+footer ul li a {
   opacity: 0.5;
+}
+
+footer ul li a:hover {
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 @media (prefers-color-scheme: dark) {

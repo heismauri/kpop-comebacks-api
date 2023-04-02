@@ -51,10 +51,17 @@ const buildHTML = async () => {
         </header>
         <main>${releasesToHTML(allReleases)}</main>
         <hr>
-          Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.
+          <p>Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.</p>
         <hr>
-        <footer><a href="https://www.heismauri.com/">www.heismauri.com</a></footer>
       </div>
+      <footer>
+        <ul>
+          <li><a href="/api">API Endpoint</a></li>
+          <li><a href="https://github.com/heismauri/kpop-releases-api">Check this project on GitHub</a></li>
+          <li><a href="https://ko-fi.com/heismauri">Buy me a Ko-fi</a></li>
+          <li><a href="https://www.heismauri.com">About me</a></li>
+        </ul>
+      </footer>
       <script>${mainJS}</script>
     </body>
   </html>
