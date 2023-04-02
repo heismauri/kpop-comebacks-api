@@ -1,6 +1,42 @@
 const timestampsElements = document.querySelectorAll('.calendar-day-date');
 const checkbox = document.getElementById('toggle-time');
 
+const isFromUS = () => {
+  const timeZoneCitiesUS = [
+    'America/New_York',
+    'America/Detroit',
+    'America/Kentucky/Louisville',
+    'America/Kentucky/Monticello',
+    'America/Indiana/Indianapolis',
+    'America/Indiana/Vincennes',
+    'America/Indiana/Winamac',
+    'America/Indiana/Marengo',
+    'America/Indiana/Petersburg',
+    'America/Indiana/Vevay',
+    'America/Chicago',
+    'America/Indiana/Tell_City',
+    'America/Indiana/Knox',
+    'America/Menominee',
+    'America/North_Dakota/Center',
+    'America/North_Dakota/New_Salem',
+    'America/North_Dakota/Beulah',
+    'America/Denver',
+    'America/Boise',
+    'America/Phoenix',
+    'America/Los_Angeles',
+    'America/Anchorage',
+    'America/Juneau',
+    'America/Sitka',
+    'America/Metlakatla',
+    'America/Yakutat',
+    'America/Nome',
+    'America/Adak',
+    'Pacific/Honolulu'
+  ];
+  const currentUserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return timeZoneCitiesUS.includes(currentUserTimeZone);
+};
+
 const addLeadingZero = (number) => {
   return `0${number}`.slice(-2);
 };
@@ -23,8 +59,13 @@ const formatTime = (date) => {
 const formatDate = (date, is24Hours) => {
   const day = addLeadingZero(date.getDate());
   const month = addLeadingZero(date.getMonth() + 1);
+  const year = date.getFullYear();
   const time = is24Hours ? formatTime(date) : formatAMPM(date);
-  return [`${day}.${month}.${date.getFullYear()}`, time];
+  let fullDate = [`${day}.${month}.${year}`, time];
+  if (isFromUS()) {
+    fullDate = [`${month}.${day}.${year}`, time];
+  }
+  return fullDate;
 };
 
 const timestampConverter = (is24Hours = false) => {
