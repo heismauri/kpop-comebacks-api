@@ -2,6 +2,7 @@
 
 :root {
   --primary-color: #ce5891;
+  --primary-color-hover: #a44573;
 }
 
 * {
@@ -17,8 +18,13 @@ body {
 }
 
 a {
+  color: var(--primary-color);
   text-decoration: none;
   transition: all 0.4s ease-in-out;
+}
+
+a:hover {
+  color: var(--primary-color-hover);
 }
 
 hr {
