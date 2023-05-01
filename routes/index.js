@@ -49,7 +49,9 @@ const buildHTML = async () => {
             </label>
           </div>
         </header>
-        <main>${releasesToHTML(allReleases)}</main>
+        <main id="all-releases">
+          ${releasesToHTML(allReleases)}
+        </main>
         <hr>
           <p>Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.</p>
         <hr>

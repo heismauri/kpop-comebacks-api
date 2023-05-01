@@ -40,11 +40,15 @@ img {
   height: auto;
 }
 
-.text-right {
-  text-align: right;
+.opacity-100 {
+  opacity: 1 !important;
 }
 
-.toggle-time__wrapper {
+#all-releases {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
   width: max-content;
   background-color: rgb(206 88 145 / 10%);
   padding: 0.5rem 0.75rem;
