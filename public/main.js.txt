@@ -1,41 +1,6 @@
 const timestampsElements = document.querySelectorAll('.calendar-day-date');
+const allReleasesArea = document.getElementById('all-releases');
 const checkbox = document.getElementById('toggle-time');
-
-const isFromUS = () => {
-  const timeZoneCitiesUS = [
-    'America/New_York',
-    'America/Detroit',
-    'America/Kentucky/Louisville',
-    'America/Kentucky/Monticello',
-    'America/Indiana/Indianapolis',
-    'America/Indiana/Vincennes',
-    'America/Indiana/Winamac',
-    'America/Indiana/Marengo',
-    'America/Indiana/Petersburg',
-    'America/Indiana/Vevay',
-    'America/Chicago',
-    'America/Indiana/Tell_City',
-    'America/Indiana/Knox',
-    'America/Menominee',
-    'America/North_Dakota/Center',
-    'America/North_Dakota/New_Salem',
-    'America/North_Dakota/Beulah',
-    'America/Denver',
-    'America/Boise',
-    'America/Phoenix',
-    'America/Los_Angeles',
-    'America/Anchorage',
-    'America/Juneau',
-    'America/Sitka',
-    'America/Metlakatla',
-    'America/Yakutat',
-    'America/Nome',
-    'America/Adak',
-    'Pacific/Honolulu'
-  ];
-  const currentUserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  return timeZoneCitiesUS.includes(currentUserTimeZone);
-};
 
 const addLeadingZero = (number) => {
   return `0${number}`.slice(-2);
@@ -62,18 +27,20 @@ const formatDate = (date, is24Hours) => {
   const year = date.getFullYear();
   const time = is24Hours ? formatTime(date) : formatAMPM(date);
   let fullDate = [`${day}.${month}.${year}`, time];
-  if (isFromUS()) {
+  if (isFromTheUS()) {
     fullDate = [`${month}.${day}.${year}`, time];
   }
   return fullDate;
 };
 
 const timestampConverter = (is24Hours = false) => {
+  allReleasesArea.classList.remove('opacity-100');
   timestampsElements.forEach((element) => {
     const { timestamp } = element.dataset;
     const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
     element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
   });
+  allReleasesArea.classList.add('opacity-100');
 };
 
 const get24HrsCookie = () => {
