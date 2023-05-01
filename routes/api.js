@@ -84,7 +84,7 @@ const getAllReleases = async () => {
   let { value: releases } = KVCache;
   const { metadata } = KVCache;
   if (releases) releases = JSON.parse(releases);
-  if (!releases || cacheMaxAge > (Date.now() - metadata.timestamp)
+  if (!releases || Date.now() - metadata.timestamp >= cacheMaxAge
       || new Date() > new Date(releases[0].date)) {
     releases = await getAllReleasesUpstream();
   }
