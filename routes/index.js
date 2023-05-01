@@ -3,10 +3,12 @@ import { encode } from 'he';
 import { getAllReleases } from './api';
 import styleCSS from '../public/style.css';
 import mainJS from '../public/main.js.txt';
+import countriesJS from '../public/countries.js.txt';
+import timezoneHandler from '../public/timezone-handler.js.txt';
 
 const releasesToHTML = (releases) => {
   return Object.keys(releases).map((day) => {
-    const title = `<ul class="calendar-day"><li class="calendar-day-date" data-timestamp="${day}"></li>`;
+    const title = `<ul class="calendar-day"><li class="calendar-day-date" data-timestamp="${day}">Date</li>`;
     const listElements = releases[day].map((release) => {
       return `<li>${encode(release)}</li>`;
     });
@@ -42,11 +44,14 @@ const buildHTML = async () => {
       <div class="container">
         <header>
           <h1>🫰 KPop Upcoming Releases</h1>
-          <div class="toggle-time__wrapper">
-            <label class="toggle-time">
-              <span class="toggle-time__label">24 HRS</span>
-              <input class="toggle-time__input" id="toggle-time" type="checkbox">
-            </label>
+          <div id="header-box-wrapper" class="header-box__wrapper">
+            <div class="toggle-time__wrapper header-box">
+              <label class="toggle-time">
+                <span class="toggle-time__label">24 HRS</span>
+                <input class="toggle-time__input" id="toggle-time" type="checkbox">
+              </label>
+            </div>
+            <div id="country" class="header-box"></div>
           </div>
         </header>
         <main id="all-releases">
@@ -64,6 +69,8 @@ const buildHTML = async () => {
           <li><a href="https://www.heismauri.com">About me</a></li>
         </ul>
       </footer>
+      <script>${countriesJS}</script>
+      <script>${timezoneHandler}</script>
       <script>${mainJS}</script>
     </body>
   </html>

@@ -2,6 +2,10 @@
   "env": {
     "browser": true
   },
+  "globals": {
+    "isFromTheUS": true,
+    "timezoneCountries": false
+  },
   "extends": "airbnb-base",
   "rules": {
     "arrow-body-style": 0,

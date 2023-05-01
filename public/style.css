@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
 
 :root {
   --primary-color: #ce5891;
@@ -49,18 +50,42 @@ img {
   transition: opacity 1s ease-in-out;
 }
 
+.header-box__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.header-box {
   width: max-content;
   background-color: rgb(206 88 145 / 10%);
   padding: 0.5rem 0.75rem;
   border-radius: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.header-box:first-child {
+  margin-right: 0.5rem;
+}
+
+#country .flag {
+  font-style: unset;
+  font-family: system-ui, 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  margin-left: 0.25rem;
+}
+
+#country p {
+  color: var(--primary-color);
+  margin: 0;
 }
 
 .toggle-time {
   display: flex;
   align-items: center;
-  -webkit-user-select: none;
-  user-select: none;
 }
 
 .toggle-time__label {
