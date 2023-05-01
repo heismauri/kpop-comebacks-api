@@ -80,10 +80,10 @@ const getAllReleases = async () => {
   const KVCache = await cache.getWithMetadata('releases');
   let { value: releases } = KVCache;
   const { metadata } = KVCache;
-  if (releases === null || cacheMaxAge > (Date.now() - metadata.timestamp)) {
+  if (releases) releases = JSON.parse(releases);
+  if (!releases || cacheMaxAge > (Date.now() - metadata.timestamp)
+      || new Date() > new Date(releases[0].date)) {
     releases = await getAllReleasesUpstream();
-  } else {
-    releases = JSON.parse(releases);
   }
   return releases;
 };
@@ -96,4 +96,4 @@ const handleRequest = async () => {
   });
 };
 
-export { handleRequest, getAllReleases, getAllReleasesUpstream };
+export { handleRequest, getAllReleases };
