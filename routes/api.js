@@ -70,16 +70,17 @@ const getAllReleasesUpstream = async () => {
   const nextMonthReleases = await getReleases(getNextMonth(currentDate));
   const allReleases = [...currentMonthReleases, ...nextMonthReleases];
   await cache.put('releases', JSON.stringify(allReleases), {
-    metadata: { date: allReleases[0].date },
+    metadata: { timestamp: Date.now() }
   });
   return allReleases;
 };
 
 const getAllReleases = async () => {
+  const cacheMaxAge = 6 * 60 * 60 * 1000;
   const KVCache = await cache.getWithMetadata('releases');
   let { value: releases } = KVCache;
   const { metadata } = KVCache;
-  if (releases === null || new Date() > new Date(metadata.date)) {
+  if (releases === null || cacheMaxAge > (Date.now() - metadata.timestamp)) {
     releases = await getAllReleasesUpstream();
   } else {
     releases = JSON.parse(releases);
@@ -95,4 +96,4 @@ const handleRequest = async () => {
   });
 };
 
-export { handleRequest, getAllReleases };
+export { handleRequest, getAllReleases, getAllReleasesUpstream };
