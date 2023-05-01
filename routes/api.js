@@ -39,8 +39,11 @@ const formatReleases = (releases) => {
 
 const getReleases = async (date) => {
   const formattedDate = dateForURL(date);
-  const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`)
-    .then((response) => response.json());
+  const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+    }
+  }).then((response) => response.json());
   const allReleases = json.data.content_md
     .split(/\|Day\|Time\|Artist\|Album Title\|Album Type\|Title Track\|Streaming(\r\n|\n)\|--\|--\|--\|--\|--\|--\|--(\r\n|\n)/)[3]
     .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
