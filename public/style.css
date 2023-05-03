@@ -3,6 +3,30 @@
   --primary-color-hover: #a44573;
 }
 
+.opacity-75 {
+  opacity: 0.75 !important;
+}
+
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+.mt-0 {
+  margin-top: 0 !important;
+}
+
+.p-2 {
+  padding: 0.5rem !important;
+}
+
+.px-3 {
+  padding: 0 1rem !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -11,7 +35,7 @@ body {
   margin: 0;
   color: #1d1d1f;
   font-size: 1rem;
-  font-family: 'Open Sans', system-ui, Helvetica, 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+  font-family: 'Poppins', system-ui, Helvetica, 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   line-height: 1.5;
 }
 
@@ -25,6 +49,13 @@ a:hover {
   color: var(--primary-color-hover);
 }
 
+.container {
+  width: 95%;
+  max-width: 30rem;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+}
+
 hr {
   margin: 1rem 0;
   color: inherit;
@@ -33,18 +64,43 @@ hr {
   opacity: .25;
 }
 
-img {
-  max-width: 100%;
-  height: auto;
+p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
-.opacity-100 {
-  opacity: 1 !important;
+h1 {
+  font-weight: bold;
+  font-size: 1.75rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  margin: 0;
+  margin-bottom: 0.5rem;
 }
 
-#all-releases {
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+nav ul li {
+  padding: 0.5rem 1rem;
+}
+
+nav ul li a {
+  opacity: 0.5;
+}
+
+nav ul li a:hover {
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 .header-box__wrapper {
@@ -117,21 +173,9 @@ img {
   background-image: url('data:image/svg+xml,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 8 8"%3e%3ccircle r="3" fill="%23fff"/%3e%3c/svg%3e');
 }
 
-.container {
-  width: 95%;
-  max-width: 30rem;
-  padding: 1rem 1.5rem;
-  padding-bottom: 0;
-  margin: 0 auto;
-}
-
-h1 {
-  font-weight: bold;
-  font-size: 1.75rem;
-  color: var(--primary-color);
-  text-transform: uppercase;
-  margin: 0;
-  margin-bottom: 0.5rem;
+#all-releases {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
 .calendar-day {
@@ -148,44 +192,6 @@ h1 {
   font-style: normal;
   margin-left: 0.25rem;
   opacity: 0.5;
-}
-
-a img {
-  transition: all 0.4s ease-in-out;
-}
-
-a:hover img {
-  opacity: 0.6;
-}
-
-footer {
-  padding: 1rem;
-  padding-top: 0;
-}
-
-footer ul {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: center;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  text-align: center;
-}
-
-footer ul li {
-  padding: 0.5rem 1rem;
-}
-
-footer ul li a {
-  opacity: 0.5;
-}
-
-footer ul li a:hover {
-  color: var(--primary-color);
-  opacity: 1;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -41,8 +41,17 @@ const buildHTML = async () => {
       </style>
     </head>
     <body>
-      <div class="container">
-        <header>
+      <header>
+        <nav class="p-2">
+          <ul>
+            <li><a href="/api">API Endpoint</a></li>
+            <li><a href="https://github.com/heismauri/kpop-releases-api">Check this project on GitHub</a></li>
+            <li><a href="https://ko-fi.com/heismauri">Buy me a Ko-fi</a></li>
+            <li><a href="https://www.heismauri.com">About me</a></li>
+          </ul>
+        </nav>
+        <div class="container">
+          <hr class="mt-0">
           <h1>🫰 KPop Upcoming Releases</h1>
           <div id="header-box-wrapper" class="header-box__wrapper">
             <div class="toggle-time__wrapper header-box">
@@ -53,28 +62,23 @@ const buildHTML = async () => {
             </div>
             <div id="country" class="header-box"></div>
           </div>
-        </header>
+        </div>
+      </header>
+      <div class="container">
         <main id="all-releases">
           ${releasesToHTML(allReleases)}
         </main>
         <hr>
-          <p>Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.</p>
-        <hr>
       </div>
-      <footer>
-        <ul>
-          <li><a href="/api">API Endpoint</a></li>
-          <li><a href="https://github.com/heismauri/kpop-releases-api">Check this project on GitHub</a></li>
-          <li><a href="https://ko-fi.com/heismauri">Buy me a Ko-fi</a></li>
-          <li><a href="https://www.heismauri.com">About me</a></li>
-        </ul>
+      <footer class="px-3 text-center opacity-75">
+        <p>Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.</p>
       </footer>
       <script>${countriesJS}</script>
       <script>${timezoneHandler}</script>
       <script>${mainJS}</script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     </body>
   </html>
   `;
