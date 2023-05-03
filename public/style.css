@@ -27,6 +27,10 @@
   text-align: center !important;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -164,7 +168,6 @@ nav ul li a:hover {
   transition: background-color 0.15s ease-in-out,
     background-position 0.15s ease-in-out, border-color 0.15s ease-in-out,
     box-shadow 0.15s ease-in-out;
-  cursor: pointer;
 }
 
 .toggle-time .toggle-time__input:checked {
