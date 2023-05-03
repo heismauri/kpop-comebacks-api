@@ -72,6 +72,9 @@ const buildHTML = async () => {
       <script>${countriesJS}</script>
       <script>${timezoneHandler}</script>
       <script>${mainJS}</script>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
     </body>
   </html>
   `;

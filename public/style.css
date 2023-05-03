@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
-
 :root {
   --primary-color: #ce5891;
   --primary-color-hover: #a44573;
@@ -12,9 +9,9 @@
 
 body {
   margin: 0;
-  color: #3c4142;
+  color: #1d1d1f;
   font-size: 1rem;
-  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', system-ui, Helvetica, 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   line-height: 1.5;
 }
 
@@ -74,7 +71,6 @@ img {
 
 #country .flag {
   font-style: unset;
-  font-family: system-ui, 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
   margin-left: 0.25rem;
 }
 
