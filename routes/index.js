@@ -1,10 +1,6 @@
 import { encode } from 'he';
 
 import { getAllReleases } from './api';
-import styleCSS from '../public/style.css';
-import mainJS from '../public/main.js.txt';
-import countriesJS from '../public/countries.js.txt';
-import timezoneHandler from '../public/timezone-handler.js.txt';
 
 const releasesToHTML = (releases) => {
   return Object.keys(releases).map((day) => {
@@ -35,10 +31,11 @@ const buildHTML = async () => {
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>KPop Upcoming Releases - heismauri</title>
       <meta name="description" content="Your go-to source for Kpop fans looking for accurate and up-to-date information on upcoming releases of KPop. Our site displays the date on your local time making it easy for you to not get confused about time zones">
-      <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🫰</text></svg>">
-      <style>
-        ${styleCSS}
-      </style>
+      <link rel="icon" href="https://www.heismauri.com/assets/kpop-releases/favicon.png" type="image/png">
+      <link rel="stylesheet" href="https://www.heismauri.com/assets/kpop-releases/style.css">
+      <script src="https://www.heismauri.com/assets/kpop-releases/countries.js" defer></script>
+      <script src="https://www.heismauri.com/assets/kpop-releases/timezone-handler.js" defer></script>
+      <script src="https://www.heismauri.com/assets/kpop-releases/main.js" defer></script>
     </head>
     <body>
       <header>
@@ -56,8 +53,8 @@ const buildHTML = async () => {
           <div id="header-box-wrapper" class="header-box__wrapper">
             <div class="toggle-time__wrapper header-box">
               <label class="toggle-time">
-                <span class="toggle-time__label">24 HRS</span>
-                <input class="toggle-time__input" id="toggle-time" type="checkbox">
+                <span class="toggle-time__label cursor-pointer">24 HRS</span>
+                <input class="toggle-time__input cursor-pointer" id="toggle-time" type="checkbox">
               </label>
             </div>
             <div id="country" class="header-box"></div>
@@ -71,14 +68,11 @@ const buildHTML = async () => {
         <hr>
       </div>
       <footer class="px-3 text-center opacity-75">
-        <p>Thanks to <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a> who provides a releases calendar with useful information which brings life to this web app.</p>
+        <p>Thanks to the <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a>'s release calendar, which serves as the key that unlocks the magic of this web app.</p>
       </footer>
-      <script>${countriesJS}</script>
-      <script>${timezoneHandler}</script>
-      <script>${mainJS}</script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap">
     </body>
   </html>
   `;
