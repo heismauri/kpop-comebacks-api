@@ -41,10 +41,10 @@ const buildHTML = async () => {
       <header>
         <nav class="p-2">
           <ul>
-            <li><a href="/api">API Endpoint</a></li>
-            <li><a href="https://github.com/heismauri/kpop-comebacks-api">Check this project on GitHub</a></li>
+            <li><a href="/api">API</a></li>
+            <li><a href="https://github.com/heismauri/kpop-comebacks-api">GitHub</a></li>
             <li><a href="https://ko-fi.com/heismauri">Buy me a Ko-fi</a></li>
-            <li><a href="https://www.heismauri.com">About me</a></li>
+            <li><a href="https://www.instagram.com/kda.webp">Collector account</a></li>
           </ul>
         </nav>
         <div class="container">
