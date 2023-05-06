@@ -1,4 +1,4 @@
-# KPop Releases API
+# KPop Comebacks API
 
 The path `/api` displays the latest updates with a timestamp to convert on the users' local time. It also has the main site (`/`) which already converts them into the desired output.
 
@@ -25,8 +25,8 @@ The path `/api` displays the latest updates with a timestamp to convert on the u
 ```
 
 ## Information
-This API is used on [kpop-releases-widget](https://github.com/heismauri/kpop-releases-widget), an iOS Scriptable widget made to keep track of the upcoming releases.
+This API is used on [kpop-comebacks-widget](https://github.com/heismauri/kpop-comebacks-widget), an iOS Scriptable widget made to keep track of the upcoming comebacks.
 
 ## Acknowledgements
 
-* [KPop Subreddit](https://www.reddit.com/r/kpop/wiki/upcoming-releases/2022/october/)
+* [KPop Subreddit](https://www.reddit.com/r/kpop/wiki/upcoming-comebacks/2022/october/)

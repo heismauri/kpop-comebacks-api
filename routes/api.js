@@ -18,39 +18,39 @@ const getNextMonth = (date) => {
   return nextMonth;
 };
 
-const timestampMaker = (release) => {
-  return new Date(`${release.year} ${release.month} ${release.day} ${release.time} GMT+9`);
+const timestampMaker = (comeback) => {
+  return new Date(`${comeback.year} ${comeback.month} ${comeback.day} ${comeback.time} GMT+9`);
 };
 
-const formatReleases = (releases) => {
+const formatComebacks = (comebacks) => {
   const currentDay = new Date();
-  return releases.map((release, index) => {
-    if (release.day === '') release.day = releases[index - 1].day;
-    if (release.time === '') release.time = releases[index - 1].time;
-    let date = timestampMaker(release);
+  return comebacks.map((comeback, index) => {
+    if (comeback.day === '') comeback.day = comebacks[index - 1].day;
+    if (comeback.time === '') comeback.time = comebacks[index - 1].time;
+    let date = timestampMaker(comeback);
     if (currentDay > date) return false;
     date = date.getTime();
     return {
       date,
-      title: release.title
+      title: comeback.title
     };
-  }).filter((release) => release);
+  }).filter((comeback) => comeback);
 };
 
-const getReleases = async (date) => {
+const getComebacks = async (date) => {
   const formattedDate = dateForURL(date);
   const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`, {
     headers: {
       'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
     }
   }).then((response) => response.json());
-  const allReleases = json.data.content_md
+  const allComebacks = json.data.content_md
     .split(/\|Day\|Time\|Artist\|Album Title\|Album Type\|Title Track\|Streaming(\r\n|\n)\|--\|--\|--\|--\|--\|--\|--(\r\n|\n)/)[3]
     .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
     .split(/\r\n|\n/);
-  const unformattedReleases = allReleases.map((release) => {
+  const unformattedComebacks = allComebacks.map((comeback) => {
     // eslint-disable-next-line prefer-const
-    let [, day, time, artist, detail] = release.split('|');
+    let [, day, time, artist, detail] = comeback.split('|');
     if (time === '?') return false;
     artist = artist.replace(/^\*|\*$/g, '');
     detail = detail.replace(/^\*|\*$/g, '');
@@ -61,42 +61,42 @@ const getReleases = async (date) => {
     return {
       year, month, day, time, title
     };
-  }).filter((release) => release);
-  return formatReleases(unformattedReleases)
+  }).filter((comeback) => comeback);
+  return formatComebacks(unformattedComebacks)
     .sort((a, b) => a.title.localeCompare(b.title))
     .sort((a, b) => a.date - b.date);
 };
 
-const getAllReleasesUpstream = async () => {
+const getAllComebacksUpstream = async () => {
   const currentDate = new Date();
-  const currentMonthReleases = await getReleases(currentDate);
-  const nextMonthReleases = await getReleases(getNextMonth(currentDate));
-  const allReleases = [...currentMonthReleases, ...nextMonthReleases];
-  await cache.put('releases', JSON.stringify(allReleases), {
+  const currentMonthComebacks = await getComebacks(currentDate);
+  const nextMonthComebacks = await getComebacks(getNextMonth(currentDate));
+  const allComebacks = [...currentMonthComebacks, ...nextMonthComebacks];
+  await cache.put('comebacks', JSON.stringify(allComebacks), {
     metadata: { timestamp: Date.now() }
   });
-  return allReleases;
+  return allComebacks;
 };
 
-const getAllReleases = async () => {
+const getAllComebacks = async () => {
   const cacheMaxAge = 6 * 60 * 60 * 1000;
-  const KVCache = await cache.getWithMetadata('releases');
-  let { value: releases } = KVCache;
+  const KVCache = await cache.getWithMetadata('comebacks');
+  let { value: comebacks } = KVCache;
   const { metadata } = KVCache;
-  if (releases) releases = JSON.parse(releases);
-  if (!releases || Date.now() - metadata.timestamp >= cacheMaxAge
-      || new Date() > new Date(releases[0].date)) {
-    releases = await getAllReleasesUpstream();
+  if (comebacks) comebacks = JSON.parse(comebacks);
+  if (!comebacks || Date.now() - metadata.timestamp >= cacheMaxAge
+      || new Date() > new Date(comebacks[0].date)) {
+    comebacks = await getAllComebacksUpstream();
   }
-  return releases;
+  return comebacks;
 };
 
 const handleRequest = async () => {
-  return new Response(JSON.stringify(await getAllReleases()), {
+  return new Response(JSON.stringify(await getAllComebacks()), {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     },
   });
 };
 
-export { handleRequest, getAllReleases };
+export { handleRequest, getAllComebacks };

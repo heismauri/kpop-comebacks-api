@@ -1,5 +1,5 @@
 const timestampsElements = document.querySelectorAll('.calendar-day-date');
-const allReleasesArea = document.getElementById('all-releases');
+const allComebacksArea = document.getElementById('all-comebacks');
 const checkbox = document.getElementById('toggle-time');
 
 const addLeadingZero = (number) => {
@@ -34,13 +34,13 @@ const formatDate = (date, is24Hours) => {
 };
 
 const timestampConverter = (is24Hours = false) => {
-  allReleasesArea.classList.remove('opacity-100');
+  allComebacksArea.classList.remove('opacity-100');
   timestampsElements.forEach((element) => {
     const { timestamp } = element.dataset;
     const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
     element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
   });
-  allReleasesArea.classList.add('opacity-100');
+  allComebacksArea.classList.add('opacity-100');
 };
 
 const get24HrsCookie = () => {

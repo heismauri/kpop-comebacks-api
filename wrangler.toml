@@ -1,4 +1,4 @@
-name = "kpop-releases"
+name = "kpop-comebacks"
 main = "worker.js"
 compatibility_date = "2023-02-28"
 workers_dev = false
