@@ -55,7 +55,7 @@ a:hover {
 
 .container {
   width: 95%;
-  max-width: 32rem;
+  max-width: 32.25rem;
   padding: 0 1.5rem;
   margin: 0 auto;
 }
@@ -65,7 +65,7 @@ hr {
   color: inherit;
   border: 0;
   border-top: 1px solid;
-  opacity: .25;
+  opacity: 0.25;
 }
 
 p {
