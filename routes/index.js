@@ -36,6 +36,10 @@ const buildHTML = async () => {
       <script src="https://www.heismauri.com/assets/kpop-comebacks/countries.js" defer></script>
       <script src="https://www.heismauri.com/assets/kpop-comebacks/timezone-handler.js" defer></script>
       <script src="https://www.heismauri.com/assets/kpop-comebacks/main.js" defer></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" as="style" onload="this.rel='stylesheet'">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" media="print" onload="this.media='all'">
     </head>
     <body>
       <header>
@@ -71,9 +75,6 @@ const buildHTML = async () => {
       <footer class="px-3 text-center opacity-75">
         <p>Thanks to the <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a>'s comeback calendar, which serves as the key that unlocks the magic of this web app.</p>
       </footer>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap">
     </body>
   </html>
   `;
