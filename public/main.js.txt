@@ -33,14 +33,17 @@ const formatDate = (date, is24Hours) => {
   return fullDate;
 };
 
-const timestampConverter = (is24Hours = false) => {
-  allComebacksArea.classList.remove('opacity-100');
-  timestampsElements.forEach((element) => {
-    const { timestamp } = element.dataset;
-    const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
-    element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
+const timestampConverter = async (is24Hours = false) => {
+  allComebacksArea.classList.remove('opacity-100-with-ease');
+  await new Promise((resolve, _) => {
+    timestampsElements.forEach((element) => {
+      const { timestamp } = element.dataset;
+      const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);
+      element.innerHTML = `<strong>${date}</strong><i>${time}</i>`;
+    });
+    resolve();
   });
-  allComebacksArea.classList.add('opacity-100');
+  allComebacksArea.classList.add('opacity-100-with-ease');
 };
 
 const get24HrsCookie = () => {

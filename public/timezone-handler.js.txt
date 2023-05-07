@@ -7,8 +7,11 @@ const isFromTheUS = () => timezoneCountries[currentUserTimeZone] === 'US';
 const countryToEmoji = (c) => c.replace(/./g, (ch) => String.fromCodePoint(0x1f1a5 + ch.toUpperCase().charCodeAt()));
 
 const printFlagAndTimeZone = async () => {
-  countryElement.innerHTML = `<p>${currentUserTimeZone}<strong class="flag">${countryToEmoji(timezoneCountries[currentUserTimeZone])}</strong></p>`;
-  headerBoxWrapper.classList.add('opacity-100');
+  await new Promise((resolve, _) => {
+    countryElement.innerHTML = `<p>${currentUserTimeZone}<strong class="flag">${countryToEmoji(timezoneCountries[currentUserTimeZone])}</strong></p>`;
+    resolve();
+  });
+  headerBoxWrapper.classList.add('opacity-100-with-ease');
 };
 
 printFlagAndTimeZone();
