@@ -41,6 +41,7 @@ const buildHTML = async () => {
       <header>
         <nav class="p-2">
           <ul>
+            <li><a href="https://github.com/heismauri/kpop-comebacks-widget">iOS Widget</a></li>
             <li><a href="/api">API</a></li>
             <li><a href="https://github.com/heismauri/kpop-comebacks-api">GitHub</a></li>
             <li><a href="https://ko-fi.com/heismauri">Buy me a Ko-fi</a></li>
