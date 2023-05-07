@@ -9,6 +9,7 @@
 
 .opacity-100 {
   opacity: 1 !important;
+  transition: opacity 1s ease;
 }
 
 .mt-0 {
@@ -112,7 +113,6 @@ nav ul li a:hover {
   flex-wrap: wrap;
   margin-bottom: 1.5rem;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
 }
 
 .header-box {
@@ -179,7 +179,6 @@ nav ul li a:hover {
 
 #all-comebacks {
   opacity: 0;
-  transition: opacity 1s ease-in-out;
 }
 
 .calendar-day {
