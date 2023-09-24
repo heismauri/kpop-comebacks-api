@@ -2,9 +2,10 @@ name = "kpop-comebacks"
 main = "worker.js"
 compatibility_date = "2023-02-28"
 workers_dev = false
+minify = true
 
 kv_namespaces = [
-  { binding = "cache", id = "df76d8aa5ee745809d32e650d0195f42", preview_id = "2c247a04d8bc4523aee1d53fec4864ba" }
+  { binding = "data", id = "2742623002b041759dd02d62e0a6688d", preview_id = "ebd975bc248d4f14a86f80b5a362b92f" }
 ]
 
 rules = [
