@@ -21,8 +21,10 @@ const groupByDate = (comebacks) => {
   }, {});
 };
 
-const buildHTML = async () => {
-  const allComebacks = groupByDate(await getAllComebacks());
+const buildHTML = async (env) => {
+  const googleApisFont = 'https://fonts.googleapis.com/css2?'
+    + 'family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap';
+  const allComebacks = groupByDate(await getAllComebacks(env));
   const page = `
   <!DOCTYPE html>
   <html lang="en">
@@ -30,7 +32,9 @@ const buildHTML = async () => {
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>KPop Upcoming Comebacks - heismauri</title>
-      <meta name="description" content="Your go-to source for Kpop fans looking for accurate and up-to-date information on upcoming comebacks of KPop. Our site displays the date on your local time making it easy for you to not get confused about time zones">
+      <meta name="description" content="Your go-to source for Kpop fans looking for accurate and up-to-date information
+        on upcoming comebacks of KPop. Our site displays the date on your local time making it easy for you to not
+        get confused about time zones">
       <link rel="icon" href="https://www.heismauri.com/assets/kpop-comebacks/favicon.png" type="image/png">
       <link rel="stylesheet" href="https://www.heismauri.com/assets/kpop-comebacks/style.css">
       <script src="https://www.heismauri.com/assets/kpop-comebacks/countries.js" defer></script>
@@ -38,8 +42,8 @@ const buildHTML = async () => {
       <script src="https://www.heismauri.com/assets/kpop-comebacks/main.js" defer></script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com">
-      <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" as="style" onload="this.rel='stylesheet'">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap" media="print" onload="this.media='all'">
+      <link rel="preload" href="${googleApisFont}" as="style" onload="this.rel='stylesheet'">
+      <link rel="stylesheet" href="${googleApisFont}" media="print" onload="this.media='all'">
     </head>
     <body>
       <header>
@@ -73,7 +77,10 @@ const buildHTML = async () => {
         <hr>
       </div>
       <footer class="px-3 text-center opacity-75">
-        <p>Thanks to the <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a>'s comeback calendar, which serves as the key that unlocks the magic of this web app.</p>
+        <p>
+          Thanks to the <a href="https://www.reddit.com/r/kpop/">KPop Subreddit</a>'s comeback calendar, which serves as
+          the key that unlocks the magic of this web app.
+        </p>
       </footer>
     </body>
   </html>

@@ -37,6 +37,15 @@ const formatComebacks = (comebacks) => {
   }).filter((comeback) => comeback);
 };
 
+const headerRegExp = () => {
+  return new RegExp(
+    '\\|Day\\|Time\\|Artist\\|Album Title\\|Album Type\\|Title Track\\|Streaming'
+    + '(\\r\\n|\\n)'
+    + '\\|--\\|--\\|--\\|--\\|--\\|--\\|--'
+    + '(\\r\\n|\\n)'
+  );
+};
+
 const getComebacks = async (date) => {
   const formattedDate = dateForURL(date);
   const json = await fetch(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`, {
@@ -45,7 +54,7 @@ const getComebacks = async (date) => {
     }
   }).then((response) => response.json());
   const allComebacks = json.data.content_md
-    .split(/\|Day\|Time\|Artist\|Album Title\|Album Type\|Title Track\|Streaming(\r\n|\n)\|--\|--\|--\|--\|--\|--\|--(\r\n|\n)/)[3]
+    .split(headerRegExp())[3]
     .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
     .split(/\r\n|\n/);
   const unformattedComebacks = allComebacks.map((comeback) => {
@@ -67,32 +76,35 @@ const getComebacks = async (date) => {
     .sort((a, b) => a.date - b.date);
 };
 
-const getAllComebacksUpstream = async () => {
+const getAllComebacksUpstream = async (env) => {
   const currentDate = new Date();
   const currentMonthComebacks = await getComebacks(currentDate);
   const nextMonthComebacks = await getComebacks(getNextMonth(currentDate));
   const allComebacks = [...currentMonthComebacks, ...nextMonthComebacks];
-  await cache.put('comebacks', JSON.stringify(allComebacks), {
+  await env.data.put('comebacks', JSON.stringify(allComebacks), {
     metadata: { timestamp: Date.now() }
   });
   return allComebacks;
 };
 
-const getAllComebacks = async () => {
+const getAllComebacks = async (env) => {
   const cacheMaxAge = 6 * 60 * 60 * 1000;
-  const KVCache = await cache.getWithMetadata('comebacks');
-  let { value: comebacks } = KVCache;
-  const { metadata } = KVCache;
-  if (comebacks) comebacks = JSON.parse(comebacks);
-  if (!comebacks || Date.now() - metadata.timestamp >= cacheMaxAge
-      || new Date() > new Date(comebacks[0].date)) {
-    comebacks = await getAllComebacksUpstream();
+  const dataKV = await env.data.getWithMetadata('comebacks');
+  let { value: comebacks } = dataKV;
+  const { metadata } = dataKV;
+  try {
+    comebacks = JSON.parse(comebacks);
+    if ((Date.now() - metadata.timestamp) >= cacheMaxAge || new Date() > new Date(comebacks[0].date)) {
+      throw new Error('Cache expired');
+    }
+  } catch (_) {
+    comebacks = await getAllComebacksUpstream(env);
   }
   return comebacks;
 };
 
-const handleRequest = async () => {
-  return new Response(JSON.stringify(await getAllComebacks()), {
+const handleRequest = async (env) => {
+  return new Response(JSON.stringify(await getAllComebacks(env)), {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8'
     },

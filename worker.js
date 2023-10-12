@@ -6,12 +6,14 @@ import notFound from './routes/404';
 
 const router = Router();
 
-router.get('/', async () => buildHTML());
+router.get('/', async (_, env) => buildHTML(env));
 
-router.get('/api', async () => handleRequest());
+router.get('/api', async (_, env) => handleRequest(env));
 
 router.all('*', async () => notFound());
 
-addEventListener('fetch', (event) => {
-  event.respondWith(router.handle(event.request));
-});
+export default {
+  fetch(request, env) {
+    return router.handle(request, env);
+  }
+};

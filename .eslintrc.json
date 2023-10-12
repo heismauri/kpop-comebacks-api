@@ -7,17 +7,31 @@
     "cache": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    "ecmaVersion": 2020
   },
   "rules": {
-    "arrow-body-style": 0,
-    "comma-dangle": 0,
-    "no-console": 2,
-    "no-param-reassign": 0,
-    "no-restricted-globals": 0,
-    "no-unused-vars": 0,
-    "quote-props": [2, "consistent"],
-    "quotes": [2, "single"]
+    "arrow-body-style": "off",
+    "comma-dangle": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "tabWidth": 2
+      }
+    ],
+    "no-console": "warn",
+    "no-param-reassign": "off",
+    "no-restricted-globals": "off",
+    "quote-props": [
+      "error",
+      "consistent"
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ]
   }
 }
