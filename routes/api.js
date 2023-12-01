@@ -1,5 +1,13 @@
 import { decode } from 'he';
 
+const isPresent = (value) => {
+  return value !== undefined && value !== null && value !== '';
+};
+
+const isBlank = (value) => {
+  return !isPresent(value);
+};
+
 const dateForURL = (date) => {
   const monthNames = [
     'january', 'february', 'march', 'april', 'may', 'june',
@@ -56,12 +64,14 @@ const getComebacks = async (date) => {
     }).then((response) => response.json());
     const allComebacks = json.data.content_md
       .split(headerRegExp())[3]
+      .split('###Announced Releases')[0]
       .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
       .split(/\r\n|\n/);
     const unformattedComebacks = allComebacks.map((comeback) => {
       // eslint-disable-next-line prefer-const
       let [, day, time, artist, detail] = comeback.split('|');
-      if (time === '?') return false;
+      if (isBlank(artist)) return false;
+      if (isBlank(time) || time === '?') return false;
       artist = artist.replace(/^\*|\*$/g, '');
       detail = detail.replace(/^\*|\*$/g, '');
       if (day !== '') day = /\d+/.exec(day);
