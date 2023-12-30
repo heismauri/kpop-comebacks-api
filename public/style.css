@@ -7,7 +7,7 @@
   opacity: 0.75 !important;
 }
 
-.opacity-100 {
+.opacity-100-with-ease {
   opacity: 1 !important;
   transition: opacity 1s ease;
 }
@@ -127,11 +127,6 @@ nav ul li a:hover {
 
 .header-box:first-child {
   margin-right: 0.5rem;
-}
-
-#country .flag {
-  font-style: unset;
-  margin-left: 0.25rem;
 }
 
 #country p {

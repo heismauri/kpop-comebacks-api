@@ -9,6 +9,7 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
+  "root": true,
   "rules": {
     "arrow-body-style": "off",
     "comma-dangle": "off",

@@ -1,10 +1,35 @@
+const currentUserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 const timestampsElements = document.querySelectorAll('.calendar-day-date');
 const allComebacksArea = document.getElementById('all-comebacks');
 const checkbox = document.getElementById('toggle-time');
+const headerBoxWrapper = document.getElementById('header-box-wrapper');
+const countryElement = document.getElementById('country');
+const timezonesFromTheUS = [
+  'America/New_York', 'America/Detroit', 'America/Kentucky/Louisville', 'America/Kentucky/Monticello',
+  'America/Indiana/Indianapolis', 'America/Indiana/Vincennes', 'America/Indiana/Winamac', 'America/Indiana/Marengo',
+  'America/Indiana/Petersburg', 'America/Indiana/Vevay', 'America/Chicago', 'America/Indiana/Tell_City',
+  'America/Indiana/Knox', 'America/Menominee', 'America/North_Dakota/Center', 'America/North_Dakota/New_Salem',
+  'America/North_Dakota/Beulah', 'America/Denver', 'America/Boise', 'America/Phoenix', 'America/Los_Angeles',
+  'America/Anchorage', 'America/Juneau', 'America/Sitka', 'America/Metlakatla', 'America/Yakutat', 'America/Nome',
+  'America/Adak', 'Pacific/Honolulu'
+];
 
 const addLeadingZero = (number) => {
   return `0${number}`.slice(-2);
 };
+
+const isFromTheUS = () => {
+  return timezonesFromTheUS.includes(currentUserTimeZone);
+};
+
+const printTimeZone = async () => {
+  await new Promise((resolve) => {
+    countryElement.innerHTML = `<p>${currentUserTimeZone}</p>`;
+    resolve();
+  });
+  headerBoxWrapper.classList.add('opacity-100-with-ease');
+};
+printTimeZone();
 
 const formatAMPM = (date) => {
   let hours = date.getHours();
@@ -35,7 +60,7 @@ const formatDate = (date, is24Hours) => {
 
 const timestampConverter = async (is24Hours = false) => {
   allComebacksArea.classList.remove('opacity-100-with-ease');
-  await new Promise((resolve, _) => {
+  await new Promise((resolve) => {
     timestampsElements.forEach((element) => {
       const { timestamp } = element.dataset;
       const [date, time] = formatDate(new Date(parseInt(timestamp, 10)), is24Hours);

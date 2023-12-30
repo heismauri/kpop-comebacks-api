@@ -36,10 +36,8 @@ const buildHTML = async (env) => {
         on upcoming comebacks of KPop. Our site displays the date on your local time making it easy for you to not
         get confused about time zones">
       <link rel="icon" href="https://www.heismauri.com/assets/kpop-comebacks/favicon.png" type="image/png">
-      <link rel="stylesheet" href="https://www.heismauri.com/assets/kpop-comebacks/style.css">
-      <script src="https://www.heismauri.com/assets/kpop-comebacks/countries.js" defer></script>
-      <script src="https://www.heismauri.com/assets/kpop-comebacks/timezone-handler.js" defer></script>
-      <script src="https://www.heismauri.com/assets/kpop-comebacks/main.js" defer></script>
+      <link rel="stylesheet" href="/style.css">
+      <script src="/main.js" defer></script>
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com">
       <link rel="preload" href="${googleApisFont}" as="style" onload="this.rel='stylesheet'">

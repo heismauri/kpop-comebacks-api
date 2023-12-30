@@ -9,6 +9,6 @@ kv_namespaces = [
 ]
 
 rules = [
-  { type = "Text", globs = ["**/**.txt"], fallthrough = true },
+  { type = "Text", globs = ["**/**.js.txt"], fallthrough = true },
   { type = "Text", globs = ["**/*.css"], fallthrough = true },
 ]
