@@ -71,7 +71,7 @@ const getComebacks = async (date) => {
       // eslint-disable-next-line prefer-const
       let [, day, time, artist, detail] = comeback.split('|');
       if (isBlank(artist)) return false;
-      if (isBlank(time) || time === '?') return false;
+      if (time === '?') return false;
       artist = artist.replace(/^\*|\*$/g, '');
       detail = detail.replace(/^\*|\*$/g, '');
       if (day !== '') day = /\d+/.exec(day);
