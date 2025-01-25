@@ -26,16 +26,16 @@ const getNextMonth = (date) => {
   return nextMonth;
 };
 
-const timestampMaker = (comeback) => {
+const stringToDate = (comeback) => {
   return new Date(`${comeback.year} ${comeback.month} ${comeback.day} ${comeback.time} GMT+9`);
 };
 
 const formatComebacks = (comebacks) => {
   const currentDay = new Date();
   return comebacks.map((comeback, index) => {
-    if (comeback.day === '') comeback.day = comebacks[index - 1].day;
-    if (comeback.time === '') comeback.time = comebacks[index - 1].time;
-    let date = timestampMaker(comeback);
+    comeback.day = comeback.day || comebacks[index - 1].day;
+    comeback.time = comeback.time || comebacks[index - 1].time;
+    let date = stringToDate(comeback);
     if (currentDay > date) return false;
     date = date.getTime();
     return {
@@ -43,15 +43,6 @@ const formatComebacks = (comebacks) => {
       title: comeback.title
     };
   }).filter((comeback) => comeback);
-};
-
-const headerRegExp = () => {
-  return new RegExp(
-    '\\|Day\\|Time\\|Artist\\|Album Title\\|Album Type\\|Title Track\\|Streaming'
-    + '(\\r\\n|\\n)'
-    + '\\|--\\|--\\|--\\|--\\|--\\|--\\|--'
-    + '(\\r\\n|\\n)'
-  );
 };
 
 const getComebacks = async (date) => {
@@ -62,12 +53,15 @@ const getComebacks = async (date) => {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
       }
     }).then((response) => response.json());
-    const allComebacks = json.data.content_md
-      .split(headerRegExp())[3]
-      .split('###Announced Releases')[0]
-      .split(/(\r\n\r\n|\n\n)\[Auto-updating Spotify Playlist \(Recent Title Tracks\)\]/)[0]
-      .split(/\r\n|\n/);
-    const unformattedComebacks = allComebacks.map((comeback) => {
+    const markdownContent = json.data.content_md;
+    const tableStart = markdownContent.indexOf('|Day|Time|Artist|Album Title|Album Type|Title Track|');
+    const tableEnd = markdownContent.indexOf('Announced Releases:');
+
+    const allComebacks = markdownContent
+      .slice(tableStart, tableEnd)
+      .trim()
+      .split('\n');
+    const unformattedComebacks = allComebacks.slice(2).map((comeback) => {
       // eslint-disable-next-line prefer-const
       let [, day, time, artist, detail] = comeback.split('|');
       if (isBlank(artist)) return false;
@@ -78,6 +72,7 @@ const getComebacks = async (date) => {
       const [year, month] = formattedDate.split('/');
       let title = (detail === '') ? artist : `${artist} - ${detail}`;
       title = decode(title);
+
       return {
         year, month, day, time, title
       };

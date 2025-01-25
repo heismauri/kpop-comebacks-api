@@ -4,11 +4,11 @@ import { getAllComebacks } from './api';
 
 const comebacksToHTML = (comebacks) => {
   return Object.keys(comebacks).map((day) => {
-    const title = `<ul class="calendar-day"><li class="calendar-day-date" data-timestamp="${day}">Date</li>`;
+    const dateTitle = `<ul class="calendar-day"><li class="calendar-day-date" data-timestamp="${day}">Date</li>`;
     const listElements = comebacks[day].map((comeback) => {
       return `<li>${encode(comeback)}</li>`;
     });
-    return [title, '<ul class="calendar-day-events">', ...listElements, '</ul></li></ul>'].join('');
+    return [dateTitle, '<ul class="calendar-day-events">', ...listElements, '</ul></li></ul>'].join('');
   }).join('');
 };
 
@@ -22,8 +22,8 @@ const groupByDate = (comebacks) => {
 };
 
 const buildHTML = async (env) => {
-  const googleApisFont = 'https://fonts.googleapis.com/css2?'
-    + 'family=Poppins:wght@400;700&family=Noto+Color+Emoji&display=swap';
+  // eslint-disable-next-line max-len
+  const googleApisFont = 'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Color+Emoji&display=swap';
   const allComebacks = groupByDate(await getAllComebacks(env));
   const page = `
   <!DOCTYPE html>
