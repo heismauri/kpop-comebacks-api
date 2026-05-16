@@ -4,6 +4,7 @@ import { Comeback } from '../../src/types/comeback';
 import ComebackCard from './components/ComebackCard';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Loader from './components/Loader';
 
 const groupByDate = (comebacks: Comeback[]) => {
   return comebacks.reduce(
@@ -19,15 +20,18 @@ const groupByDate = (comebacks: Comeback[]) => {
 
 function App() {
   const [comebacks, setComebacks] = useState<Comeback[]>([]);
+  const [state, setState] = useState<'loading' | 'error' | 'success'>('loading');
 
   useEffect(() => {
     fetch('/api')
       .then((response) => response.json())
       .then((data) => {
         setComebacks(data);
+        setState('success');
       })
       .catch((error) => {
         console.error('Error fetching comebacks:', error);
+        setState('error');
       });
   }, []);
 
@@ -36,7 +40,11 @@ function App() {
       <Header />
       <div className="container">
         <main id="all-comebacks">
-          {comebacks.length === 0 ? (
+          {state === 'loading' ? (
+            <Loader />
+          ) : state === 'error' ? (
+            <p className="text-center">Error fetching comebacks.</p>
+          ) : comebacks.length === 0 ? (
             <p className="text-center">No upcoming comebacks found.</p>
           ) : (
             <>
