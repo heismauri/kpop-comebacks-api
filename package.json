@@ -7,8 +7,9 @@
   "author": "heismauri",
   "license": "GPL-3.0",
   "scripts": {
-    "dev": "vite",
-    "worker:dev": "wrangler dev",
+    "dev:vite": "vite",
+		"dev:worker": "wrangler dev --port 8787",
+		"dev": "pnpm run dev:worker & pnpm run dev:vite",
     "deploy": "wrangler deploy",
     "build": "tsc -b tsconfig.app.json && vite build",
     "lint": "eslint .",

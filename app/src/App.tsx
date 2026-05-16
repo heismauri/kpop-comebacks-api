@@ -1,7 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { Comeback } from '../../src/types/comeback';
+import ComebackCard from './components/ComebackCard';
+
+const groupByDate = (comebacks: Comeback[]) => {
+  return comebacks.reduce(
+    (accumulator, comeback) => {
+      const key = comeback.date;
+      accumulator[key] = accumulator[key] || [];
+      accumulator[key].push(comeback.title);
+      return accumulator;
+    },
+    {} as Record<string, string[]>
+  );
+};
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [comebacks, setComebacks] = useState<Comeback[]>([]);
+
+  useEffect(() => {
+    fetch('/api')
+      .then((response) => response.json())
+      .then((data) => {
+        setComebacks(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching comebacks:', error);
+      });
+  }, []);
 
   return (
     <>
@@ -45,12 +71,23 @@ function App() {
                 />
               </label>
             </div>
-            <div id="country" className="header-box"></div>
+            <div id="country" className="header-box">
+              <p>{Intl.DateTimeFormat().resolvedOptions().timeZone}</p>
+            </div>
           </div>
         </div>
       </header>
       <div className="container">
-        <main id="all-comebacks"></main>
+        <main id="all-comebacks">
+          {comebacks.length === 0 ? (
+            <p className="text-center">No upcoming comebacks found.</p>
+          ) : (
+            groupByDate(comebacks) &&
+            Object.entries(groupByDate(comebacks)).map(([date, titles]) => (
+              <ComebackCard key={date} date={date} titles={titles} />
+            ))
+          )}
+        </main>
         <hr />
       </div>
       <footer className="px-3 text-center opacity-75">
