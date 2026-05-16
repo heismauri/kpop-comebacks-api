@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Comeback } from '../../src/types/comeback';
-import ComebackCard from './components/ComebackCard';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Loader from './components/Loader';
+import { type Comeback } from '@api/types/comeback';
+import ComebackCard from '@app/components/ComebackCard';
+import Header from '@app/components/Header';
+import Footer from '@app/components/Footer';
+import Loader from '@app/components/Loader';
 
 const groupByDate = (comebacks: Comeback[]) => {
   return comebacks.reduce(

@@ -1,4 +1,4 @@
-import { Page } from '../types/reddit';
+import { Page } from '@api/types/reddit';
 
 const getPage = async (url: string): Promise<Page> => {
   console.log('Fetching page from URL:', url);

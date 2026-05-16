@@ -39,7 +39,15 @@
 		"types": [
 			"./worker-configuration.d.ts",
 			"node"
-		]
+		],
+		"paths": {
+			"@api/*": [
+				"./src/*"
+			],
+			"@app/*": [
+				"./app/src/*"
+			]
+		}
 	},
 	"exclude": ["test"],
 	"include": ["worker-configuration.d.ts", "src/**/*.ts"]

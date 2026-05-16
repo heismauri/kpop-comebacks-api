@@ -1,7 +1,7 @@
 import { decode } from 'he';
 
-import { Comeback, RawComeback } from './types/comeback';
-import { getPage } from './services/reddit';
+import { Comeback, RawComeback } from '@api/types/comeback';
+import { getPage } from '@api/services/reddit';
 
 const isPresent = (value: unknown): boolean => {
   return value !== undefined && value !== null && value !== '';

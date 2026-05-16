@@ -11,7 +11,7 @@
 		"dev:worker": "wrangler dev --port 8787",
 		"dev": "pnpm run dev:worker & pnpm run dev:vite",
     "deploy": "wrangler deploy",
-    "build": "tsc -b tsconfig.app.json && vite build",
+    "build": "tsc -b app/tsconfig.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "wrangler dev",
