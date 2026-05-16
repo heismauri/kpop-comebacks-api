@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "kpop-comebacks-api",
+  "name": "kpop-comebacks",
   "main": "src/index.ts",
   "assets": {
     "binding": "ASSETS",
