@@ -78,8 +78,7 @@ const getComebacks = async (date: Date): Promise<Comeback[]> => {
       })
       .filter((comeback): comeback is RawComeback => comeback !== null);
     return formatComebacks(unformattedComebacks)
-      .sort((a, b) => a.title.localeCompare(b.title))
-      .sort((a, b) => a.date - b.date);
+      .sort((a, b) => a.date - b.date || a.title.localeCompare(b.title));
   } catch (error) {
     console.error("Error fetching comebacks:", error);
     return [];
