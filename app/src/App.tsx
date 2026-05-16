@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { type Comeback } from '@api/types/comeback';
-import ComebackCard from '@app/components/ComebackCard';
-import Header from '@app/components/Header';
-import Footer from '@app/components/Footer';
-import Loader from '@app/components/Loader';
+import { type Comeback } from "@api/types/comeback";
+import ComebackCard from "@app/components/ComebackCard";
+import Header from "@app/components/Header";
+import Footer from "@app/components/Footer";
+import Loader from "@app/components/Loader";
 
 const groupByDate = (comebacks: Comeback[]) => {
   return comebacks.reduce(
@@ -20,19 +20,19 @@ const groupByDate = (comebacks: Comeback[]) => {
 
 function App() {
   const [comebacks, setComebacks] = useState<Comeback[]>([]);
-  const [state, setState] = useState<'loading' | 'error' | 'success'>('loading');
+  const [state, setState] = useState<"loading" | "error" | "success">("loading");
   const [twelveHour, setTwelveHour] = useState(false);
 
   useEffect(() => {
-    fetch('/api')
+    fetch("/api")
       .then((response) => response.json())
       .then((data) => {
         setComebacks(data);
-        setState('success');
+        setState("success");
       })
       .catch((error) => {
-        console.error('Error fetching comebacks:', error);
-        setState('error');
+        console.error("Error fetching comebacks:", error);
+        setState("error");
       });
   }, []);
 
@@ -41,9 +41,9 @@ function App() {
       <Header />
       <div className="container">
         <main id="all-comebacks">
-          {state === 'loading' ? (
+          {state === "loading" ? (
             <Loader />
-          ) : state === 'error' ? (
+          ) : state === "error" ? (
             <p className="text-center">Error fetching comebacks.</p>
           ) : comebacks.length === 0 ? (
             <p className="text-center">No upcoming comebacks found.</p>
@@ -52,9 +52,7 @@ function App() {
               <div id="header-box-wrapper" className="header-box__wrapper">
                 <div className="toggle-time__wrapper header-box">
                   <label className="toggle-time">
-                    <span className="toggle-time__label cursor-pointer">
-                      24 HRS
-                    </span>
+                    <span className="toggle-time__label cursor-pointer">24 HRS</span>
                     <input
                       className="toggle-time__input cursor-pointer"
                       id="toggle-time"

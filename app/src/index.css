@@ -1,5 +1,5 @@
-@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Color+Emoji&display=swap');
+@import url("https://necolas.github.io/normalize.css/latest/normalize.css");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Color+Emoji&display=swap");
 
 :root {
   --primary-color: #ce5891;
@@ -43,9 +43,7 @@ body {
   margin: 0;
   color: #1d1d1f;
   font-size: 1rem;
-  font-family:
-    'Poppins', system-ui, Helvetica, 'Apple Color Emoji', 'Noto Color Emoji',
-    sans-serif;
+  font-family: "Poppins", system-ui, Helvetica, "Apple Color Emoji", "Noto Color Emoji", sans-serif;
   line-height: 1.5;
 }
 

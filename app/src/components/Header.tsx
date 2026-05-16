@@ -4,9 +4,7 @@ const Header = () => {
       <nav className="p-2">
         <ul>
           <li>
-            <a href="https://github.com/heismauri/kpop-comebacks-widget">
-              iOS Widget
-            </a>
+            <a href="https://github.com/heismauri/kpop-comebacks-widget">iOS Widget</a>
           </li>
           <li>
             <a href="/api">API</a>
