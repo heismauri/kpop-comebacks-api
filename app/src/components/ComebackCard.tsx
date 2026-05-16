@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 
 import { type Comeback } from "@api/types/comeback";
 
@@ -50,4 +50,4 @@ const ComebackCard = ({
   );
 };
 
-export default ComebackCard;
+export default memo(ComebackCard);
