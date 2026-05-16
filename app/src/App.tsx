@@ -9,12 +9,12 @@ import Loader from '@app/components/Loader';
 const groupByDate = (comebacks: Comeback[]) => {
   return comebacks.reduce(
     (accumulator, comeback) => {
-      const key = comeback.date;
+      const key = new Date(comeback.date).toLocaleDateString();
       accumulator[key] = accumulator[key] || [];
-      accumulator[key].push(comeback.title);
+      accumulator[key].push(comeback);
       return accumulator;
     },
-    {} as Record<string, string[]>
+    {} as Record<string, Comeback[]>
   );
 };
 
@@ -59,7 +59,7 @@ function App() {
                       className="toggle-time__input cursor-pointer"
                       id="toggle-time"
                       type="checkbox"
-                      checked={twelveHour}
+                      checked={!twelveHour}
                       onChange={() => setTwelveHour((prev) => !prev)}
                     />
                   </label>
@@ -69,8 +69,8 @@ function App() {
                 </div>
               </div>
               {groupByDate(comebacks) &&
-                Object.entries(groupByDate(comebacks)).map(([date, titles]) => (
-                  <ComebackCard key={date} date={date} titles={titles} twelveHour={twelveHour} />
+                Object.entries(groupByDate(comebacks)).map(([date, comebacks]) => (
+                  <ComebackCard key={date} formattedDate={date} comebacks={comebacks} twelveHour={twelveHour} />
                 ))}
             </>
           )}

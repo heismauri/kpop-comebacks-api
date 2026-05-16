@@ -1,5 +1,5 @@
-@import url("https://necolas.github.io/normalize.css/latest/normalize.css");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Color+Emoji&display=swap");
+@import url('https://necolas.github.io/normalize.css/latest/normalize.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Noto+Color+Emoji&display=swap');
 
 :root {
   --primary-color: #ce5891;
@@ -184,14 +184,19 @@ nav ul li a:hover {
   list-style-type: none;
 }
 
+.calendar-day-group {
+  padding: 0;
+  list-style-type: none;
+}
+
 .calendar-day-events {
   padding-left: 2rem;
+  list-style-type: circle;
 }
 
 .calendar-day-date i {
   text-transform: uppercase;
   font-style: normal;
-  margin-left: 0.25rem;
   opacity: 0.5;
 }
 
