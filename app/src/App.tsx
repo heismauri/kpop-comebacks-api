@@ -21,6 +21,7 @@ const groupByDate = (comebacks: Comeback[]) => {
 function App() {
   const [comebacks, setComebacks] = useState<Comeback[]>([]);
   const [state, setState] = useState<'loading' | 'error' | 'success'>('loading');
+  const [twelveHour, setTwelveHour] = useState(false);
 
   useEffect(() => {
     fetch('/api')
@@ -58,6 +59,8 @@ function App() {
                       className="toggle-time__input cursor-pointer"
                       id="toggle-time"
                       type="checkbox"
+                      checked={twelveHour}
+                      onChange={() => setTwelveHour((prev) => !prev)}
                     />
                   </label>
                 </div>
@@ -67,7 +70,7 @@ function App() {
               </div>
               {groupByDate(comebacks) &&
                 Object.entries(groupByDate(comebacks)).map(([date, titles]) => (
-                  <ComebackCard key={date} date={date} titles={titles} />
+                  <ComebackCard key={date} date={date} titles={titles} twelveHour={twelveHour} />
                 ))}
             </>
           )}
