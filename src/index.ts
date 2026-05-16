@@ -4,21 +4,7 @@ import { Comeback, RawComeback } from "@api/types/comeback";
 import { getPage } from "@api/services/reddit";
 
 const dateForURL = (date: Date): string => {
-  const monthNames = [
-    "january",
-    "february",
-    "march",
-    "april",
-    "may",
-    "june",
-    "july",
-    "august",
-    "september",
-    "october",
-    "november",
-    "december"
-  ];
-  return `${date.getFullYear()}/${monthNames[date.getMonth()]}`;
+  return `${date.getFullYear()}/${date.toLocaleString("en-US", { month: "long" }).toLowerCase()}`;
 };
 
 const getNextMonth = (date: Date): Date => {
@@ -37,8 +23,10 @@ const formatComebacks = (comebacks: RawComeback[]): Comeback[] => {
   const currentDay = new Date();
   return comebacks
     .map((comeback, index) => {
-      comeback.day = comeback.day || comebacks[index - 1].day;
-      comeback.time = comeback.time || comebacks[index - 1].time;
+      if (index > 0) {
+        comeback.day = comeback.day || comebacks[index - 1].day;
+        comeback.time = comeback.time || comebacks[index - 1].time;
+      }
       const dateObj = stringToDate(comeback);
       if (currentDay > dateObj) return null;
       return {
