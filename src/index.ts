@@ -49,6 +49,11 @@ const formatComebacks = (comebacks: RawComeback[]): Comeback[] => {
     .filter((comeback): comeback is Comeback => comeback !== null);
 };
 
+const filterPastComebacks = (comebacks: Comeback[]): Comeback[] => {
+  const currentTime = Date.now();
+  return comebacks.filter((comeback) => comeback.date > currentTime);
+};
+
 const getComebacks = async (date: Date): Promise<Comeback[]> => {
   try {
     const formattedDate = dateForURL(date);
@@ -65,7 +70,7 @@ const getComebacks = async (date: Date): Promise<Comeback[]> => {
         if (time === "?") return null;
         const artist = artistStr.replace(/^\*|\*$/g, "");
         const detail = detailStr.replace(/^\*|\*$/g, "");
-         const day = dayStr !== "" ? /\d+/.exec(dayStr)?.[0] ?? "" : dayStr;
+        const day = dayStr !== "" ? (/\d+/.exec(dayStr)?.[0] ?? "") : dayStr;
         const [year, month] = formattedDate.split("/");
         const title = decode(detail === "" ? artist : `${artist} - ${detail}`);
 
@@ -81,39 +86,44 @@ const getComebacks = async (date: Date): Promise<Comeback[]> => {
   }
 };
 
-const getAllComebacksUpstream = async (env: Env): Promise<Comeback[]> => {
+const saveComebacks = async (env: Env, comebacks: Comeback[]): Promise<void> => {
+  await env.data.put("comebacks", JSON.stringify(comebacks), {
+    metadata: { timestamp: Date.now() }
+  });
+};
+
+const refreshComebacks = async (env: Env): Promise<Comeback[]> => {
   const currentDate = new Date();
   const currentMonthComebacks = await getComebacks(currentDate);
   const nextMonthComebacks = await getComebacks(getNextMonth(currentDate));
   const allComebacks = [...currentMonthComebacks, ...nextMonthComebacks];
   if (allComebacks.length > 0) {
-    await env.data.put("comebacks", JSON.stringify(allComebacks), {
-      metadata: { timestamp: Date.now() }
-    });
+    await saveComebacks(env, allComebacks);
   }
   return allComebacks;
 };
 
 const getAllComebacks = async (env: Env): Promise<Comeback[]> => {
-  const cacheMaxAge = 6 * 60 * 60 * 1000;
+  const cacheMaxAge = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
   const { value, metadata } = await env.data.getWithMetadata<{ timestamp: number }>("comebacks");
-  try {
-    if (!value || !metadata) throw new Error("No cache");
-    const comebacks: Comeback[] = JSON.parse(value);
-    if (Date.now() - metadata.timestamp >= cacheMaxAge || new Date() > new Date(comebacks[0].date)) {
-      throw new Error("Cache expired");
-    }
-    return comebacks;
-  } catch {
-    const comebacks = await getAllComebacksUpstream(env);
-    if (comebacks.length === 0) {
-      if (value) {
-        return JSON.parse(value);
-      }
-      return [];
-    }
+
+  if (!value || !metadata) {
+    return await refreshComebacks(env);
+  }
+
+  const comebacks: Comeback[] = JSON.parse(value);
+  if (Date.now() - metadata.timestamp < cacheMaxAge && new Date() < new Date(comebacks[0].date)) {
     return comebacks;
   }
+
+  const updatedComebacks = await refreshComebacks(env);
+  if (updatedComebacks.length > 0) {
+    return updatedComebacks;
+  }
+
+  const filteredComebacks = filterPastComebacks(comebacks);
+  await saveComebacks(env, filteredComebacks);
+  return filteredComebacks;
 };
 
 export default {
