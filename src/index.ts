@@ -86,16 +86,17 @@ const getAllComebacksUpstream = async (env: Env): Promise<Comeback[]> => {
   const currentMonthComebacks = await getComebacks(currentDate);
   const nextMonthComebacks = await getComebacks(getNextMonth(currentDate));
   const allComebacks = [...currentMonthComebacks, ...nextMonthComebacks];
-  await env.data.put('comebacks', JSON.stringify(allComebacks), {
-    metadata: { timestamp: Date.now() }
-  });
+  if (allComebacks.length > 0) {
+    await env.data.put('comebacks', JSON.stringify(allComebacks), {
+      metadata: { timestamp: Date.now() }
+    });
+  }
   return allComebacks;
 };
 
 const getAllComebacks = async (env: Env): Promise<Comeback[]> => {
   const cacheMaxAge = 6 * 60 * 60 * 1000;
   const { value, metadata } = await env.data.getWithMetadata<{ timestamp: number }>('comebacks');
-  console.log('Cache metadata:', value);
   try {
     if (!value || !metadata) throw new Error('No cache');
     const comebacks: Comeback[] = JSON.parse(value);
@@ -104,7 +105,14 @@ const getAllComebacks = async (env: Env): Promise<Comeback[]> => {
     }
     return comebacks;
   } catch (_) {
-    return getAllComebacksUpstream(env);
+    const comebacks = await getAllComebacksUpstream(env);
+    if (comebacks.length === 0) {
+      if (value) {
+        return JSON.parse(value);
+      }
+      return [];
+    }
+    return comebacks;
   }
 };
 
