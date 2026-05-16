@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { memo, type JSX } from "react";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <footer className="px-3 text-center opacity-75">
       <p>

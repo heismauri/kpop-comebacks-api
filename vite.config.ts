@@ -1,19 +1,19 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'url';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { fileURLToPath } from "url";
 
 export default defineConfig({
   plugins: [react()],
-  root: 'app',
+  root: "app",
   resolve: {
     alias: {
-      '@api': fileURLToPath(new URL('./src', import.meta.url)),
-      '@app': fileURLToPath(new URL('./app/src', import.meta.url)),
-    },
+      "@api": fileURLToPath(new URL("./src", import.meta.url)),
+      "@app": fileURLToPath(new URL("./app/src", import.meta.url))
+    }
   },
   server: {
     proxy: {
-      '/api': 'http://localhost:8787'
+      "/api": "http://localhost:8787"
     }
   }
 });

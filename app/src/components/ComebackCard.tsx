@@ -1,8 +1,8 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo, type JSX } from "react";
 
 import { type Comeback } from "@api/types/comeback";
 
-const groupByTime = (comebacks: Comeback[], twelveHour: boolean) => {
+const groupByTime = (comebacks: Comeback[], twelveHour: boolean): Record<string, string[]> => {
   return comebacks.reduce(
     (accumulator, comeback) => {
       const key = new Date(comeback.date).toLocaleTimeString([], {
@@ -26,7 +26,7 @@ const ComebackCard = ({
   formattedDate: string;
   comebacks: Comeback[];
   twelveHour: boolean;
-}) => {
+}): JSX.Element => {
   const groupedComebacks = useMemo(() => groupByTime(comebacks, twelveHour), [comebacks, twelveHour]);
 
   return (

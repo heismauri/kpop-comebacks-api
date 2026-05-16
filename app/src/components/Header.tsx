@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { memo, type JSX } from "react";
 
-const Header = () => {
+const Header = (): JSX.Element => {
   return (
     <header>
       <nav className="p-2">

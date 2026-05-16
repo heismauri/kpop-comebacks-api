@@ -48,7 +48,7 @@ export interface Subreddit {
   default_set: boolean;
   user_is_contributor: boolean;
   banner_img: string;
-  allowed_media_in_comments: any[];
+  allowed_media_in_comments: boolean;
   user_is_banned: boolean;
   free_form_reports: boolean;
   community_icon: null;
@@ -58,7 +58,7 @@ export interface Subreddit {
   display_name: string;
   header_img: null;
   title: string;
-  previous_names: any[];
+  previous_names: string[];
   over_18: boolean;
   icon_size: number[];
   primary_color: string;

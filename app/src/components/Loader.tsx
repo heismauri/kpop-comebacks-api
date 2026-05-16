@@ -1,6 +1,6 @@
-import { memo } from "react";
+import { memo, type JSX } from "react";
 
-const Loader = () => {
+const Loader = (): JSX.Element => {
   return (
     <div className="ellipsis-loader">
       <div></div>

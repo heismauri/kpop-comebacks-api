@@ -3,15 +3,7 @@ import { decode } from "he";
 import { Comeback, RawComeback } from "@api/types/comeback";
 import { getPage } from "@api/services/reddit";
 
-const isPresent = (value: unknown): boolean => {
-  return value !== undefined && value !== null && value !== "";
-};
-
-const isBlank = (value: unknown): boolean => {
-  return !isPresent(value);
-};
-
-const dateForURL = (date: Date) => {
+const dateForURL = (date: Date): string => {
   const monthNames = [
     "january",
     "february",
@@ -29,17 +21,15 @@ const dateForURL = (date: Date) => {
   return `${date.getFullYear()}/${monthNames[date.getMonth()]}`;
 };
 
-const getNextMonth = (date: Date) => {
-  let nextMonth;
+const getNextMonth = (date: Date): Date => {
   if (date.getMonth() === 11) {
-    nextMonth = new Date(date.getFullYear() + 1, 0, 1);
-  } else {
-    nextMonth = new Date(date.getFullYear(), date.getMonth() + 1, 1);
+    return new Date(date.getFullYear() + 1, 0, 1);
   }
-  return nextMonth;
+
+  return new Date(date.getFullYear(), date.getMonth() + 1, 1);
 };
 
-const stringToDate = (comeback: RawComeback) => {
+const stringToDate = (comeback: RawComeback): Date => {
   return new Date(`${comeback.year} ${comeback.month} ${comeback.day} ${comeback.time} GMT+9`);
 };
 
@@ -59,27 +49,25 @@ const formatComebacks = (comebacks: RawComeback[]): Comeback[] => {
     .filter((comeback): comeback is Comeback => comeback !== null);
 };
 
-const getComebacks = async (date: Date) => {
+const getComebacks = async (date: Date): Promise<Comeback[]> => {
   try {
     const formattedDate = dateForURL(date);
     const json = await getPage(`https://www.reddit.com/r/kpop/wiki/upcoming-releases/${formattedDate}.json`);
     const markdownContent = json.data.content_md;
     const tableStart = markdownContent.indexOf("|Day|Time|Artist|Album Title|Album Type|Title Track|");
     const tableEnd = markdownContent.indexOf("Announced Releases:");
-    console.log(markdownContent);
     const allComebacks = markdownContent.slice(tableStart, tableEnd).trim().split("\n");
     const unformattedComebacks = allComebacks
       .slice(2)
       .map((comeback) => {
-        let [, day, time, artist, detail] = comeback.split("|");
-        if (isBlank(artist)) return null;
+        const [, dayStr, time, artistStr, detailStr] = comeback.split("|");
+        if (!artistStr) return null;
         if (time === "?") return null;
-        artist = artist.replace(/^\*|\*$/g, "");
-        detail = detail.replace(/^\*|\*$/g, "");
-        if (day !== "") day = /\d+/.exec(day)?.[0] ?? "";
+        const artist = artistStr.replace(/^\*|\*$/g, "");
+        const detail = detailStr.replace(/^\*|\*$/g, "");
+         const day = dayStr !== "" ? /\d+/.exec(dayStr)?.[0] ?? "" : dayStr;
         const [year, month] = formattedDate.split("/");
-        let title = detail === "" ? artist : `${artist} - ${detail}`;
-        title = decode(title);
+        const title = decode(detail === "" ? artist : `${artist} - ${detail}`);
 
         return { year, month, day, time, title };
       })
@@ -116,7 +104,7 @@ const getAllComebacks = async (env: Env): Promise<Comeback[]> => {
       throw new Error("Cache expired");
     }
     return comebacks;
-  } catch (_) {
+  } catch {
     const comebacks = await getAllComebacksUpstream(env);
     if (comebacks.length === 0) {
       if (value) {

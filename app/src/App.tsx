@@ -1,12 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type JSX } from "react";
 
 import { type Comeback } from "@api/types/comeback";
 import ComebackCard from "@app/components/ComebackCard";
-import Header from "@app/components/Header";
 import Footer from "@app/components/Footer";
+import Header from "@app/components/Header";
 import Loader from "@app/components/Loader";
 
-const groupByDate = (comebacks: Comeback[]) => {
+const groupByDate = (comebacks: Comeback[]): Record<string, Comeback[]> => {
   return comebacks.reduce(
     (accumulator, comeback) => {
       const key = new Date(comeback.date).toLocaleDateString().replaceAll("/", ".");
@@ -21,7 +21,7 @@ const groupByDate = (comebacks: Comeback[]) => {
 const TWELVE_HOUR_RE = /AM|PM/;
 const USER_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-const App = () => {
+const App = (): JSX.Element => {
   const [state, setState] = useState<"loading" | "error" | "success">("loading");
   const [comebacks, setComebacks] = useState<Comeback[]>([]);
   const groupedComebacks = useMemo(() => groupByDate(comebacks), [comebacks]);
