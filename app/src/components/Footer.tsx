@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Footer = () => {
   return (
     <footer className="px-3 text-center opacity-75">
@@ -9,4 +11,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

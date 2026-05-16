@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { type Comeback } from "@api/types/comeback";
 
 const groupByTime = (comebacks: Comeback[], twelveHour: boolean) => {
@@ -25,13 +27,15 @@ const ComebackCard = ({
   comebacks: Comeback[];
   twelveHour: boolean;
 }) => {
+  const groupedComebacks = useMemo(() => groupByTime(comebacks, twelveHour), [comebacks, twelveHour]);
+
   return (
     <ul className="calendar-day">
       <li className="calendar-day-date">
-        <strong>{formattedDate.replaceAll("/", ".")}</strong>
+        <strong>{formattedDate}</strong>
       </li>
       <ul className="calendar-day-group">
-        {Object.entries(groupByTime(comebacks, twelveHour)).map(([time, titles]) => (
+        {Object.entries(groupedComebacks).map(([time, titles]) => (
           <li key={time} className="calendar-day-date">
             <i>{time}</i>
             <ul className="calendar-day-events">

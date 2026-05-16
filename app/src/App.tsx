@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { type Comeback } from "@api/types/comeback";
 import ComebackCard from "@app/components/ComebackCard";
@@ -9,7 +9,7 @@ import Loader from "@app/components/Loader";
 const groupByDate = (comebacks: Comeback[]) => {
   return comebacks.reduce(
     (accumulator, comeback) => {
-      const key = new Date(comeback.date).toLocaleDateString();
+      const key = new Date(comeback.date).toLocaleDateString().replaceAll("/", ".");
       accumulator[key] = accumulator[key] || [];
       accumulator[key].push(comeback);
       return accumulator;
@@ -18,10 +18,16 @@ const groupByDate = (comebacks: Comeback[]) => {
   );
 };
 
-function App() {
-  const [comebacks, setComebacks] = useState<Comeback[]>([]);
+const TWELVE_HOUR_RE = /AM|PM/;
+const USER_TIMEZONE = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+const App = () => {
   const [state, setState] = useState<"loading" | "error" | "success">("loading");
-  const [twelveHour, setTwelveHour] = useState(false);
+  const [comebacks, setComebacks] = useState<Comeback[]>([]);
+  const groupedComebacks = useMemo(() => groupByDate(comebacks), [comebacks]);
+  const [twelveHour, setTwelveHour] = useState(() =>
+    TWELVE_HOUR_RE.test(Intl.DateTimeFormat([], { hour: "numeric" }).format(new Date()).toUpperCase())
+  );
 
   useEffect(() => {
     fetch("/api")
@@ -63,13 +69,12 @@ function App() {
                   </label>
                 </div>
                 <div id="country" className="header-box">
-                  <p>{Intl.DateTimeFormat().resolvedOptions().timeZone}</p>
+                  <p>{USER_TIMEZONE}</p>
                 </div>
               </div>
-              {groupByDate(comebacks) &&
-                Object.entries(groupByDate(comebacks)).map(([date, comebacks]) => (
-                  <ComebackCard key={date} formattedDate={date} comebacks={comebacks} twelveHour={twelveHour} />
-                ))}
+              {Object.entries(groupedComebacks).map(([date, comebacks]) => (
+                <ComebackCard key={date} formattedDate={date} comebacks={comebacks} twelveHour={twelveHour} />
+              ))}
             </>
           )}
         </main>
@@ -78,6 +83,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 const Loader = () => {
   return (
     <div className="ellipsis-loader">
@@ -9,4 +11,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default memo(Loader);
